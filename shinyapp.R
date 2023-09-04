@@ -85,14 +85,15 @@ find_mega=function(startdate, enddate){
 
 # Trend of Most Popular Numbers Over Year
 find_number_trend=matrix(NA,ncol=3,nrow=length(unique(year)))
-for (i in 1:length(2003:2022)){
+for (i in 1:length(2003:2023)){
   df=lottery %>%
     filter(year==2002+i)
   find_number_trend[i,]=tail(names(sort(table(unlist(c(df[,4:8]))))), 3)
 }
 find_number_trend=as.data.frame(find_number_trend)
-find_number_trend=cbind(c(2003:2022),find_number_trend)%>%
-  rename("year"="c(2003:2022)",
+
+find_number_trend=cbind(c(2003:2023),find_number_trend)%>%
+  rename("year"="c(2003:2023)",
          "top_1"="V1",
          "top_2"="V2",
          "top_3"="V3")
@@ -126,7 +127,8 @@ numberfreq = numberfreq %>%
 # probability for mega Ball
 ballfreq = table(lottery%>%filter(year>=2018)%>%select(Mega.Ball)) %>%
   as.data.frame()
-ballfreq$Var1 = as.numeric(ballfreq$Var1)
+
+#ballfreq$Var1 = as.numeric(ballfreq$Var1)
 colnames(ballfreq) = c("Number","Frequency")
 ballfreq = ballfreq %>% 
   mutate(Class=FreqClass(ballfreq$Frequency)) %>%
